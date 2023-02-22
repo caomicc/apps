@@ -22,9 +22,10 @@ ChartJS.defaults.datasets.line.borderColor = tokens.colorPrimary;
 interface LineChartProps {
   dataValues: Array<string | number>;
   xAxesLabels: Array<string>;
+  tooltipMetricLabel: string;
 }
 
-const LineChart = ({ dataValues, xAxesLabels }: LineChartProps) => {
+const LineChart = ({ dataValues, xAxesLabels, tooltipMetricLabel }: LineChartProps) => {
   const data = {
     labels: xAxesLabels,
     datasets: [
@@ -40,6 +41,16 @@ const LineChart = ({ dataValues, xAxesLabels }: LineChartProps) => {
         backgroundColor: tokens.colorBlack,
         bodyColor: tokens.colorWhite,
         padding: 12,
+        titleFont: {
+          size: 14,
+        },
+        bodyFont: {
+          size: 12,
+        },
+        displayColors: false,
+        callbacks: {
+          beforeLabel: () => tooltipMetricLabel,
+        },
       },
     },
   };

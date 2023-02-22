@@ -14,11 +14,16 @@ const Sidebar = () => {
 
   const mockData = [1000, -500, 500, 230];
   const mockLabels = ['January', 'February', 'March', 'April'];
+  const mockTooltipMetricLabel = 'Page views';
 
   return (
     <>
       <Paragraph>Hello Sidebar Component (AppId: {sdk.ids.app})</Paragraph>
-      <LineChart dataValues={mockData} xAxesLabels={mockLabels} />
+      <LineChart
+        dataValues={mockData}
+        xAxesLabels={mockLabels}
+        tooltipMetricLabel={mockTooltipMetricLabel}
+      />
     </>
   );
 };
