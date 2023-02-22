@@ -157,13 +157,14 @@ export class Api {
   }
 
   async listAccounts(): Promise<AccountSummaries> {
-    return await fetchFromApi<AccountSummaries>(
+    const res = await fetchFromApi<AccountSummaries>(
       this.requestUrl('api/accounts'),
       ZAccountSummaries,
       this.appDefinitionId,
       this.cma,
       this.serviceAccountKeyHeaders
     );
+    return res;
   }
 
   private get serviceAccountKeyHeaders(): Headers {

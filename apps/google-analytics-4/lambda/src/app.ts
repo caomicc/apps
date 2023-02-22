@@ -47,6 +47,8 @@ app.options('/*', function (_req, res) {
 // validate signed requests
 app.use(['/api/credentials', '/api/account_summaries'], verifySignedRequestMiddleware);
 app.use(['/api/credentials', '/api/account_summaries'], serviceAccountKeyProvider);
+app.use(['/api/credentials', '/api/accounts'], verifySignedRequestMiddleware);
+app.use(['/api/credentials', '/api/accounts'], serviceAccountKeyProvider);
 
 // Maps an error class name -> a handler function that takes the error of that type as input and returns
 // a correctly configured API error as output.
@@ -82,6 +84,25 @@ app.get('/api/account_summaries', async (req, res, next) => {
 
     const googleApi = GoogleApi.fromServiceAccountKeyFile(serviceAccountKeyFile);
     const result = await googleApi.listAccountSummaries();
+    res.status(200).json(result);
+  } catch (err) {
+    // pass to apiErrorHandler
+    next(err)
+  }
+});
+
+app.get('/api/accounts', async (req, res, next) => {
+  try {
+    const serviceAccountKeyFile = req.serviceAccountKey;
+    if (serviceAccountKeyFile === undefined) {
+      // intentional runtime error because the middleware already handles this. typescript
+      // just doesn't realize
+      throw new Error('missing service account key value');
+    }
+
+    const googleApi = GoogleApi.fromServiceAccountKeyFile(serviceAccountKeyFile);
+    const result = await googleApi.listAccounts();
+    console.log(result)
     res.status(200).json(result);
   } catch (err) {
     // pass to apiErrorHandler
