@@ -7,6 +7,8 @@
     "@contentful/f36-components": "4.23.3",
     "@contentful/f36-tokens": "4.0.1",
     "@contentful/react-apps-toolkit": "1.2.10",
+    "@sentry/browser": "^7.38.0",
+    "@sentry/tracing": "^7.38.0",
     "@testing-library/user-event": "14.4.3",
     "@types/lodash": "4.14.191",
     "chart.js": "^4.2.1",

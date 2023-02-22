@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser';
 import React, { useMemo } from 'react';
 import { locations } from '@contentful/app-sdk';
 import ConfigScreen from './locations/ConfigScreen';
@@ -21,6 +22,22 @@ const ComponentLocationSettings = {
 
 const App = () => {
   const sdk = useSDK();
+
+  // Set user information, as well as tags for contentful context
+  Sentry.configureScope((scope) => {
+    scope.clear();
+    scope.setUser({ id: sdk.ids.user });
+    for (const [key, value] of Object.entries(sdk.ids)) {
+      // app: "5eHTUt9pILTGjYk3VFE9ta"
+      // contentType: ""
+      // entry: ""
+      // environment: "gary.hepting"
+      // field: ""
+      // organization: "6xdLsz6lCsk0yPOccSsDK7"
+      // space: "30x8uoqewkkz"
+      if (key !== 'user') scope.setTag(key, value);
+    }
+  });
 
   const Component = useMemo(() => {
     for (const [location, component] of Object.entries(ComponentLocationSettings)) {
