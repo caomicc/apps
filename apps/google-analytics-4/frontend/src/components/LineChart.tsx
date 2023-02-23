@@ -38,7 +38,7 @@ const LineChart = ({ dataValues, xAxesLabels, tooltipMetricLabel }: LineChartPro
   const options = {
     plugins: {
       tooltip: {
-        backgroundColor: tokens.colorBlack,
+        backgroundColor: tokens.gray900,
         bodyColor: tokens.colorWhite,
         padding: 12,
         titleFont: {
